@@ -18,10 +18,15 @@ const httpServer = http.createServer(app);
 // http 서버 위에 webSocket(ws) 서버를 만들 수 있도록 함
 const wss = new WebSocketServer({ server: httpServer }); // This can handle http and ws protocol // This is not required
 
-function handleConnection(socket) { // socket: 연결된 브라우저와의 contact(연락)라인
-  console.log(socket);
-}
-wss.on("connection", handleConnection);
+// function handleConnection(socket) { // socket: 연결된 브라우저와의 contact(연락)라인
+//   console.log(socket);
+// }
+wss.on("connection", (socket) => {
+  console.log("Connected to Browser ✅");
+  socket.on("close", () => console.log("Disconnected from the Browser ❌"));
+  socket.on("message", (message) => console.log(message.toString('utf-8')));
+  socket.send("hello!!!");
+});
 
 
 httpServer.listen(3060, handleListen);
