@@ -21,11 +21,20 @@ const wss = new WebSocketServer({ server: httpServer }); // This can handle http
 // function handleConnection(socket) { // socket: 연결된 브라우저와의 contact(연락)라인
 //   console.log(socket);
 // }
+
+
+// fake DB
+const sockets = [];
+
 wss.on("connection", (socket) => {
+  sockets.push(socket);
   console.log("Connected to Browser ✅");
   socket.on("close", () => console.log("Disconnected from the Browser ❌"));
-  socket.on("message", (message) => console.log(message.toString('utf-8')));
-  socket.send("hello!!!");
+
+  socket.on("message", (message) => {
+    const messageToString = message.toString("utf-8");
+    sockets.forEach(aSocket => aSocket.send(messageToString));
+  })
 });
 
 
