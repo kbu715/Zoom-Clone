@@ -11,11 +11,5 @@ html(lang="en")
             h1 Zoom
             hr
         main
-            form#nick
-                input(type="text", placeholder="Choose a nickname", required)
-                button Save
-            ul
-            form#message
-                input(type="text", placeholder="Write a message", required)
-                button Send
+        script(src="/socket.io/socket.io.js") 
         script(src="/public/js/app.js")  
