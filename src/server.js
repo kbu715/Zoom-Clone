@@ -73,6 +73,15 @@ wsServer.on("connection", (socket) => {
     done();
     socket.to(roomName).emit("welcome"); // emit to others except for me!
   });
+
+  socket.on("disconnecting", () => {
+    socket.rooms.forEach((room) => socket.to(room).emit("bye"));
+  })
+
+  socket.on("new_message", (msg, room, done) => {
+    socket.to(room).emit("new_message", msg);
+    done(); // it runs on the client side
+  })
 });
 
 const handleListen = () => console.log(`Listening on http://localhost:3000`);
