@@ -1,6 +1,8 @@
 import http from "http";
 // import { WebSocketServer } from 'ws';
-import SocketIO from 'socket.io';
+// import SocketIO from 'socket.io';
+import { Server } from "socket.io";
+import { instrument } from "@socket.io/admin-ui";
 import express from "express";
 
 const app = express();
@@ -60,7 +62,17 @@ httpServer.listen(3060, handleListen);
 /*  SOCKET.IO  */
 
 const httpServer = http.createServer(app);
-const wsServer = SocketIO(httpServer);
+// const wsServer = SocketIO(httpServer);
+const wsServer = new Server(httpServer, {
+  cors: {
+    origin: ["https://admin.socket.io"],
+    credentials: true,
+  },
+});
+
+instrument(wsServer, {
+  auth: false,
+});
 
 function getPublicRooms() {
   const { sockets: { adapter: { sids, rooms } } } = wsServer;
