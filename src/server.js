@@ -62,6 +62,17 @@ httpServer.listen(3060, handleListen);
 const httpServer = http.createServer(app);
 const wsServer = SocketIO(httpServer);
 
+function getPublicRooms() {
+  const { sockets: { adapter: { sids, rooms } } } = wsServer;
+  const publicRooms = [];
+  rooms.forEach((_, key) => {
+    if(sids.get(key) === undefined) { // sids: map // to separate private rooms from public rooms 
+      publicRooms.push(key);
+    }
+  })
+  return publicRooms;
+}
+
 wsServer.on("connection", (socket) => {
   socket["nickname"] = "anonymous";
   socket.onAny((event) => {
