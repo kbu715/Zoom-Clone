@@ -1,8 +1,8 @@
 import http from "http";
 // import { WebSocketServer } from 'ws';
-// import SocketIO from 'socket.io';
-import { Server } from "socket.io";
-import { instrument } from "@socket.io/admin-ui";
+import SocketIO from 'socket.io';
+// import { Server } from "socket.io";
+// import { instrument } from "@socket.io/admin-ui";
 import express from "express";
 
 const app = express();
@@ -61,6 +61,7 @@ httpServer.listen(3060, handleListen);
 
 /*  SOCKET.IO  */
 
+/*
 const httpServer = http.createServer(app);
 // const wsServer = SocketIO(httpServer);
 const wsServer = new Server(httpServer, {
@@ -116,6 +117,19 @@ wsServer.on("connection", (socket) => {
 
   socket.on("nickname", nickname => socket["nickname"] = nickname);
 });
+
+const handleListen = () => console.log(`Listening on http://localhost:3000`);
+httpServer.listen(3000, handleListen);
+
+*/
+
+
+
+
+// VIDEO CALL
+
+const httpServer = http.createServer(app);
+const wsServer = SocketIO(httpServer);
 
 const handleListen = () => console.log(`Listening on http://localhost:3000`);
 httpServer.listen(3000, handleListen);
