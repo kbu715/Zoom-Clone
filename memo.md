@@ -12,3 +12,9 @@
 web Real Time Communication
 
 - Peer to Peer Connection!
+
+- signaling process
+
+  - we dont need a server to send and receive the audio and the vedio
+  - but we need a server to exchange offers
+  - once the offers are exchanged then we can talk directly to each other
